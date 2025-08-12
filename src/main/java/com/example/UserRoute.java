@@ -14,10 +14,11 @@ public class UserRoute extends RouteBuilder {
         rest("/users")
             .post()
                 .type(User.class)
-                .route()
-                    .marshal().json(JsonLibrary.Jackson)
-                    .to("file:/tmp/users?fileName=user-${date:now:yyyyMMddHHmmssSSS}.json")
-                    .setBody(simple("Usuario almacenado"))
-                .endRest();
+                .to("direct:storeUser");
+
+        from("direct:storeUser")
+            .marshal().json(JsonLibrary.Jackson)
+            .to("file:/tmp/users?fileName=user-${date:now:yyyyMMddHHmmssSSS}.json")
+            .setBody(simple("Usuario almacenado"));
     }
 }
