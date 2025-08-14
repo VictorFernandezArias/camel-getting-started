@@ -12,16 +12,20 @@ Ejemplo sencillo con Apache Camel que consulta la [PokeAPI](https://pokeapi.co/)
    ```bash
    java -jar target/camel-getting-started-1.0-SNAPSHOT.jar
    ```
-   Se generará un archivo `output/pokemon.json` con la información del Pokémon.
+   Se ejecutara el springboot con la ruta camel
+
+3. Explota el servicio:
+   ```bash
+   curl -X POST http://localhost:8080/users -H "Content-Type: application/json" -d '{"name":"Victor","age":32}'
+   ```
+   Se ...
 
 ## Ejecutar con Podman
 
 1. Construye la imagen:
    ```bash
-   podman build -t camel-poke .
+   podman build -t camel-user-app .
    ```
 2. Ejecuta el contenedor (montando un volumen para recuperar el archivo de salida):
    ```bash
-   podman run --rm -v $(pwd)/output:/app/output camel-poke
-   ```
-   El archivo `output/pokemon.json` quedará disponible en tu máquina.
+   podman run --rm localhost/camel-user-app -p 8080:8080
